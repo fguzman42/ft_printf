@@ -184,7 +184,7 @@ int ft_printf(const char *str, ...)
 
 int main()
 {
-    char c[20] = "changing to see if commits will show";
+    char c[20] = "last test";
     int d;
 
     d = -30;
