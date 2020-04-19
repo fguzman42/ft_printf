@@ -112,62 +112,67 @@ int ft_printf(const char *str, ...)
     while (str[i])
     {
         if (str[i] == '%')
+        {
+            if (str[i] == '.')
             {
                 i++;
-                if (str[i] == 'c')
-                {
-                    buffer[j] = (char)va_arg(arg, int);
-                    j++;
-                }
-                else if (str[i] == 's')
-                {
-                    const char* argString = va_arg(arg, const char*);
-                    strcat(buffer, argString);
-                    j = strlen(buffer);
-                }
-                else if (str[i] == 'd' || str[i] == 'i')
-                {
-                    num = va_arg(arg, int);
-                    char argNum[200];
-                    itoa(num, argNum, 10);
-                    strcat(buffer, argNum);
-                    j = strlen(buffer);
-                }
-                else if (str[i] == 'p')
-                {
-                    int p = va_arg(arg, int);
-                    char argP[200];
-                    itoa(p, argP, 16);
-                    strcat(buffer, argP);
-                    j = strlen(buffer);
-                }
-                else if (str[i] == 'x' || str[i] == 'X')
-                {
-                    unsigned int x = va_arg(arg, unsigned int);
-                    char argx[200];
-                    itoa(x, argx, 16);
-                    if (str[i] == 'X')
+                
+            }
+            i++;
+            if (str[i] == 'c')
+            {
+                buffer[j] = (char)va_arg(arg, int);
+                j++;
+            }
+            else if (str[i] == 's')
+            {
+                const char* argString = va_arg(arg, const char*);
+                strcat(buffer, argString);
+                j = strlen(buffer);
+            }
+            else if (str[i] == 'd' || str[i] == 'i')
+            {
+                num = va_arg(arg, int);
+                char argNum[200];
+                itoa(num, argNum, 10);
+                strcat(buffer, argNum);
+                j = strlen(buffer);
+            }
+            else if (str[i] == 'p')
+            {
+                int p = va_arg(arg, int);
+                char argP[200];
+                itoa(p, argP, 16);
+                strcat(buffer, argP);
+                j = strlen(buffer);
+            }
+            else if (str[i] == 'x' || str[i] == 'X')
+            {
+                unsigned int x = va_arg(arg, unsigned int);
+                char argx[200];
+                itoa(x, argx, 16);
+                if (str[i] == 'X')
+                    {
+                        int e = 0;
+                        while (argx[e])
                         {
-                            int e = 0;
-                            while (argx[e])
-                            {
-                                argx[e] = ft_toupper(argx[e]);
-                                e++;
-                            }
+                            argx[e] = ft_toupper(argx[e]);
+                            e++;
                         }
-                    strcat(buffer, argx);
-                    j = strlen(buffer);
-                }
-                else if (str[i] == 'u')
-                {
-                    unsigned int u = va_arg(arg, unsigned int);
-                    printf("%u\n", u);
-                    char argu[200];
-                    ft_utoa(u, argu, 10);
-                    printf("%s\n", argu);
-                    strcat(buffer, argu);
-                    j = strlen(buffer);
-                }
+                    }
+                strcat(buffer, argx);
+                j = strlen(buffer);
+            }
+            else if (str[i] == 'u')
+            {
+                unsigned int u = va_arg(arg, unsigned int);
+                printf("%u\n", u);
+                char argu[200];
+                ft_utoa(u, argu, 10);
+                printf("%s\n", argu);
+                strcat(buffer, argu);
+                j = strlen(buffer);
+            }
             }
         else
         {
