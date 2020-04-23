@@ -4,6 +4,16 @@
 #include <string.h>
 #include <unistd.h>
 
+
+
+typedef struct s_flags
+{
+    int dot;
+    int ast;
+    int num;
+    char* numstr;
+}              t_flags;
+
 int unum_size(unsigned int num)
 {
     int count;
@@ -106,19 +116,31 @@ int ft_printf(const char *str, ...)
 {
     int i = 0, j = 0, num = 0;
     char buffer[1000], c;
+    t_flags flag;
     va_list arg;
-
+    int dotflag = 0;
+    int wnum = 0;
     va_start(arg, str);
     while (str[i])
     {
         if (str[i] == '%')
         {
+            i++;
             if (str[i] == '.')
             {
                 i++;
-                
+                char width[100];
+                int w = 0;
+                while (str[i] >= '0' && str[i] <= '9')
+                {
+                    width[w] = str[i];
+                    w++;
+                    i++;
+                }
+                width[i] = '\0';
+                wnum = atoi(width);
+                dotflag = 1;
             }
-            i++;
             if (str[i] == 'c')
             {
                 buffer[j] = (char)va_arg(arg, int);
@@ -127,6 +149,30 @@ int ft_printf(const char *str, ...)
             else if (str[i] == 's')
             {
                 const char* argString = va_arg(arg, const char*);
+                if (dotflag = 1)
+                {
+                    if (wnum < strlen(argString))
+                    {
+                        char spaces[100];
+                        int sp = 0;
+                        printf("hellolol\n");
+                        printf("%d\n", wnum);
+                        while (wnum >= 0)
+                        {
+                            printf("hellolol\n");
+                            spaces[sp] = argString[sp];
+                            printf("%c\n", argString[sp]);
+                            sp++;
+                            wnum--;
+                        }
+                        spaces[sp] = '\0';
+                        strcat(buffer, spaces);
+                        j = strlen(buffer);
+                        buffer[j] = '\0';
+                        i++;
+                        break ;
+                    }
+                }
                 strcat(buffer, argString);
                 j = strlen(buffer);
             }
@@ -194,8 +240,8 @@ int main()
 
     d = -30;
 
-    ///c = "hello world";
-    ft_printf("can you print this shit out [%X] or naw?", d);
-    printf("can you print this shit out [%-.0X] or naw?", d);
+    
+    ft_printf("can you print this shit out [%.1s] or naw?", c);
+    printf("can you print this shit out [%.1s] or naw?", c);
     return (0);
 }
