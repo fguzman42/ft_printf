@@ -126,8 +126,7 @@ int ft_printf(const char *str, ...)
         if (str[i] == '%')
         {
             i++;
-            if (str[i] == '.')
-            {
+            if (str[i] == '.' && dotflag == 0)            {
                 i++;
                 char width[100];
                 int w = 0;
@@ -137,7 +136,7 @@ int ft_printf(const char *str, ...)
                     w++;
                     i++;
                 }
-                width[i] = '\0';
+                width[w] = '\0';
                 wnum = atoi(width);
                 dotflag = 1;
             }
@@ -154,27 +153,31 @@ int ft_printf(const char *str, ...)
                     if (wnum < strlen(argString))
                     {
                         char spaces[100];
-                        int sp = 0;
+                        int p = 0;
                         printf("hellolol\n");
                         printf("%d\n", wnum);
-                        while (wnum >= 0)
+                        while (p < wnum)
                         {
                             printf("hellolol\n");
-                            spaces[sp] = argString[sp];
-                            printf("%c\n", argString[sp]);
-                            sp++;
-                            wnum--;
+                            spaces[p] = argString[p];
+                            printf("%c\n", argString[p]);
+                            p++;
                         }
-                        spaces[sp] = '\0';
+                        printf("spaces is %s\n", spaces);
+                        spaces[p] = '\0';
                         strcat(buffer, spaces);
                         j = strlen(buffer);
-                        buffer[j] = '\0';
-                        i++;
-                        break ;
+                        //buffer[j] = '\0';
+                        //i++;
+                        //break ;
                     }
                 }
-                strcat(buffer, argString);
-                j = strlen(buffer);
+                else
+                {
+                    printf("spaces is %s\n", );
+                    strcat(buffer, argString);
+                    j = strlen(buffer);
+                }
             }
             else if (str[i] == 'd' || str[i] == 'i')
             {
@@ -219,7 +222,7 @@ int ft_printf(const char *str, ...)
                 strcat(buffer, argu);
                 j = strlen(buffer);
             }
-            }
+        }
         else
         {
             buffer[j] = str[i];
@@ -241,7 +244,7 @@ int main()
     d = -30;
 
     
-    ft_printf("can you print this shit out [%.1s] or naw?", c);
-    printf("can you print this shit out [%.1s] or naw?", c);
+    ft_printf("can you print this shit out [%.9s] or naw?", c);
+    printf("can you print this shit out [%.9s] or naw?", c);
     return (0);
 }
