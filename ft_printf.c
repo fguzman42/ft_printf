@@ -148,35 +148,23 @@ int ft_printf(const char *str, ...)
             else if (str[i] == 's')
             {
                 const char* argString = va_arg(arg, const char*);
-                printf("%d\n", dotflag);
                 if (dotflag == 1)
                 {
-                    printf("this appears before the if statement\n");
-                    printf("wnum = %d    strlen(argstring) = %d\n", wnum, strlen(argString));
                     if (wnum < strlen(argString))
                     {
                         char spaces[100];
                         int p = 0;
-                        printf("hellolol\n");
-                        printf("%d\n", wnum);
                         while (p < wnum)
                         {
-                            printf("hellolol\n");
                             spaces[p] = argString[p];
-                            printf("%c\n", argString[p]);
                             p++;
                         }
-                        printf("spaces is %s\n", spaces);
                         spaces[p] = '\0';
                         strcat(buffer, spaces);
                         j = strlen(buffer);
-                        //buffer[j] = '\0';
-                        //i++;
-                        //break ;
                     }
                     else
                     {
-                        printf("spaces is %s\n", argString);
                         strcat(buffer, argString);
                         j = strlen(buffer);
                     }
@@ -184,11 +172,9 @@ int ft_printf(const char *str, ...)
                 }
                 else
                 {
-                    printf("spaces is %s\n", argString);
                     strcat(buffer, argString);
                     j = strlen(buffer);
                 }
-                printf("spaces is %s\n", argString);
             }
             else if (str[i] == 'd' || str[i] == 'i')
             {
