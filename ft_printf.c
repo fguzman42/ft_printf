@@ -126,7 +126,8 @@ int ft_printf(const char *str, ...)
         if (str[i] == '%')
         {
             i++;
-            if (str[i] == '.' && dotflag == 0)            {
+            if (str[i] == '.' && dotflag == 0)            
+            {
                 i++;
                 char width[100];
                 int w = 0;
@@ -168,7 +169,6 @@ int ft_printf(const char *str, ...)
                         strcat(buffer, argString);
                         j = strlen(buffer);
                     }
-                    
                 }
                 else
                 {
@@ -181,8 +181,33 @@ int ft_printf(const char *str, ...)
                 num = va_arg(arg, int);
                 char argNum[200];
                 itoa(num, argNum, 10);
-                strcat(buffer, argNum);
-                j = strlen(buffer);
+                if (dotflag == 1)
+                {
+                    if (wnum > strlen(argNum))
+                    {
+                        char zeros[100];
+                        int np = 0;
+                        while (np < (wnum - strlen(argNum)))
+                        {
+                            zeros[np] = '0';
+                            np++;
+                        }
+                        zeros[np] = '\0';
+                        strcat(zeros, argNum);
+                        strcat(buffer, zeros);
+                        j = strlen(buffer);
+                    }
+                    else
+                    {
+                        strcat(buffer, argNum);
+                        j = strlen(buffer);
+                    }
+                }
+                else
+                {
+                    strcat(buffer, argNum);
+                    j = strlen(buffer);
+                }
             }
             else if (str[i] == 'p')
             {
@@ -238,10 +263,10 @@ int main()
     char c[20] = "last test";
     int d;
 
-    d = -30;
+    d = 30;
 
     
-    ft_printf("can you print this shit out [%.9s] or naw?\n", c);
-    printf("can you print this shit out [%.9s] or naw?\n", c);
+    ft_printf("can you print this shit out [%.3d] or naw?\n", d);
+    printf("can you print this shit out [%.3d] or naw?\n", d);
     return (0);
 }
