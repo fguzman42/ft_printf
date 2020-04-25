@@ -214,8 +214,33 @@ int ft_printf(const char *str, ...)
                 int p = va_arg(arg, int);
                 char argP[200];
                 itoa(p, argP, 16);
-                strcat(buffer, argP);
-                j = strlen(buffer);
+                if (dotflag == 1)
+                {
+                    if (wnum > strlen(argP))
+                    {
+                        char pzeros[100];
+                        int pp = 0;
+                        while (pp < (wnum - strlen(argP)))
+                        {
+                            pzeros[pp] = '0';
+                            pp++;
+                        }
+                        pzeros[pp] = '\0';
+                        strcat(pzeros, argP);
+                        strcat(buffer, pzeros);
+                        j = strlen(buffer);
+                    }
+                    else
+                    {
+                        strcat(buffer, argP);
+                        j = strlen(buffer);
+                    }
+                }
+                else
+                {
+                    strcat(buffer, argP);
+                    j = strlen(buffer);
+                }
             }
             else if (str[i] == 'x' || str[i] == 'X')
             {
@@ -231,8 +256,33 @@ int ft_printf(const char *str, ...)
                             e++;
                         }
                     }
-                strcat(buffer, argx);
-                j = strlen(buffer);
+                if (dotflag == 1)
+                {
+                    if (wnum > strlen(argx))
+                    {
+                        char xzeros[100];
+                        int xp = 0;
+                        while (xp < (wnum - strlen(argx)))
+                        {
+                            xzeros[xp] = '0';
+                            xp++;
+                        }
+                        xzeros[xp] = '\0';
+                        strcat(xzeros, argx);
+                        strcat(buffer, xzeros);
+                        j = strlen(buffer);
+                    }
+                    else
+                    {
+                        strcat(buffer, argx);
+                        j = strlen(buffer);
+                    }
+                }
+                else
+                {
+                    strcat(buffer, argx);
+                    j = strlen(buffer);
+                }
             }
             else if (str[i] == 'u')
             {
@@ -261,6 +311,11 @@ int ft_printf(const char *str, ...)
                         j = strlen(buffer);
                     }
                 }
+                else
+                {
+                    strcat(buffer, argu);
+                    j = strlen(buffer);
+                }
             }
         }
         else
@@ -284,7 +339,7 @@ int main()
     d = 30;
 
     
-    ft_printf("can you print this shit out [%.10u] or naw?\n", 12);
-    printf("can you print this shit out [%.10u] or naw?\n", 12);
+    ft_printf("can you print this shit out [%p] or naw?\n", d);
+    printf("can you print this shit out [%p] or naw?\n", d);
     return (0);
 }
