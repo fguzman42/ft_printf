@@ -237,12 +237,30 @@ int ft_printf(const char *str, ...)
             else if (str[i] == 'u')
             {
                 unsigned int u = va_arg(arg, unsigned int);
-                printf("%u\n", u);
                 char argu[200];
                 ft_utoa(u, argu, 10);
-                printf("%s\n", argu);
-                strcat(buffer, argu);
-                j = strlen(buffer);
+                if (dotflag == 1)
+                {
+                    if (wnum > strlen(argu))
+                    {
+                        char uzeros[100];
+                        int up = 0;
+                        while (up < (wnum - strlen(argu)))
+                        {
+                            uzeros[up] = '0';
+                            up++;
+                        }
+                        uzeros[up] = '\0';
+                        strcat(uzeros, argu);
+                        strcat(buffer, uzeros);
+                        j = strlen(buffer);
+                    }
+                    else
+                    {
+                        strcat(buffer, argu);
+                        j = strlen(buffer);
+                    }
+                }
             }
         }
         else
@@ -261,12 +279,12 @@ int ft_printf(const char *str, ...)
 int main()
 {
     char c[20] = "last test";
-    int d;
+    unsigned int d;
 
     d = 30;
 
     
-    ft_printf("can you print this shit out [%.3d] or naw?\n", d);
-    printf("can you print this shit out [%.3d] or naw?\n", d);
+    ft_printf("can you print this shit out [%.10u] or naw?\n", 12);
+    printf("can you print this shit out [%.10u] or naw?\n", 12);
     return (0);
 }
