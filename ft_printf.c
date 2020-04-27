@@ -211,9 +211,28 @@ int ft_printf(const char *str, ...)
             }
             else if (str[i] == 'p')
             {
+                int pe = 0;
                 int p = va_arg(arg, int);
                 char argP[200];
                 itoa(p, argP, 16);
+                //printf("%d\n", strlen(argP));
+                if (strlen(argP) != 8)
+                    {
+                        char pbuf[8];
+                        while (pe < 8 - strlen(argP))
+                        {
+                            pbuf[pe] = '0';
+                            pe++;
+                        }
+                        pbuf[pe] = '\0';
+                        strcat(buffer, pbuf);
+                        pe = 0;
+                    }
+                while (argP[pe])
+                {
+                    argP[pe] = ft_toupper(argP[pe]);
+                    pe++;
+                }
                 if (dotflag == 1)
                 {
                     if (wnum > strlen(argP))
